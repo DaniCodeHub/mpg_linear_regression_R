@@ -9,23 +9,48 @@ output: html_document
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-```{r displacement vs. hwy_mileage, echo=FALSE}
+```{r dataset, echo=FALSE }
+
 library(tidyverse)
 library(tidymodels)
+set.seed(0)
+
+mpg_metric <- mpg %>% 
+  mutate(mpg, "cty_metric" = 0.425144 * cty) %>% 
+  mutate(mpg, "hwy_metric" = 0.425144 * hwy)
+
+mpg_split <- initial_split(mpg_metric, prop = 4/5)
+
+mpg_train <- training(mpg_split)
+mpg_test <- testing(mpg_split)
+
+```
+
+```{r displacement vs. hwy_mileage, echo=FALSE}
+
 ggplot(mpg_train, aes(x = displ,
                       y = hwy_metric)) +
   geom_point() +
   geom_smooth(method = 'lm')
+
 ```
 
 ```{r plot basic statistics, echo=FALSE}
+
+lr_model = lm(formula = hwy_metric ~ displ, data = mpg_train)
 plot(lr_model)
+
+predictions <- predict(lr_model, mpg_test)
+
 ```
 
 ```{r prediction vs. experimental, echo=FALSE}
+
 ggplot(mpg_test, aes(x = hwy_metric,
                       y = predictions)) +
   geom_point() + 
   geom_smooth(method = 'lm',
               se = FALSE)
 ```
+
+# We can see that the graph above shows an approximate linear relationship between the predicted and experimental variables 
