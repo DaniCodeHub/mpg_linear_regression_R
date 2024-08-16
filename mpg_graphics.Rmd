@@ -1,0 +1,31 @@
+---
+title: "mpg_graphics"
+author: "DaniCodeHub"
+date: "2024-08-15"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r mpg_train, echo=FALSE}
+library(tidyverse)
+library(tidymodels)
+ggplot(mpg_train, aes(x = displ,
+                      y = hwy_metric)) +
+  geom_point() +
+  geom_smooth(method = 'lm')
+```
+
+```{r plot basic statistics, echo=FALSE}
+plot(lr_model)
+```
+
+```{r prediction vs. experimental, echo=FALSE}
+ggplot(mpg_test, aes(x = hwy_metric,
+                      y = predictions)) +
+  geom_point() + 
+  geom_smooth(method = 'lm',
+              se = FALSE)
+```
