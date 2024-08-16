@@ -1,5 +1,5 @@
 # Utilize linear regression to analyze the mpg data set in 'ggplot2' package from R
-# data()
+data()
 
 # load in libraries 
 
