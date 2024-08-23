@@ -107,4 +107,4 @@ ggplot(mpg_test, aes(x = hwy_metric,
               se = FALSE)
 
 # It appears that the predicted values have a slight linear relationship with the experimental values
-
+ 
